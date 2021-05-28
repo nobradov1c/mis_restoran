@@ -1,0 +1,39 @@
+@charset "utf-8"
+
+// custom variables
+$body-overflow-y: auto
+
+// import bulma styles
+@import ./custom-bulma.sass
+
+// custom global styles
+body
+  min-height: 100vh
+  background-color: #1C1D25
+
+.has-navbar-fixed-top
+  padding-top: 3.25rem
+
+#app-outer
+  display: flex
+  flex-direction: column
+  min-height: 100vh
+
+#app-inner
+  flex-grow: 1
+
+.page
+  max-width: 900px
+  margin: auto
+  padding: 0 $size-4
+  &.spaced
+    margin-top: $size-5
+    margin-bottom: $size-5
+
+.icon
+  display: grid
+  place-items: center
+  svg
+    height: 1em
+    path
+      fill: currentColor
