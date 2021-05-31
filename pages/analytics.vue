@@ -25,6 +25,7 @@
 </template>
 
 <script>
+const name = 'Analytics'
 function data() {
   return {
     visitsSeries: [
@@ -187,6 +188,7 @@ const computed = {
 function mounted() {}
 
 export default {
+  name,
   data,
   computed,
   mounted,
