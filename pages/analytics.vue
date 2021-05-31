@@ -1,8 +1,6 @@
 <template>
   <div class="page spaced has-text-white">
     <h1 class="title has-text-white">Analytics</h1>
-    <!-- TODO: charts go here -->
-    <!-- <Chart width="100%" height="300" :options="options" :series="series" /> -->
     <client-only>
       <component
         :is="apexchart"
@@ -27,10 +25,6 @@
 </template>
 
 <script>
-const name = 'Analytics'
-const components = {
-  // Chart,
-}
 function data() {
   return {
     visitsSeries: [
@@ -176,12 +170,10 @@ const computed = {
   },
   orderData() {
     const orderData = []
-    // console.log(this.menu)
     this.ordersCounter.forEach((order) => {
       const filteredMenu = this.menu.filter((item) => {
         return item.id === order.id
       })
-      console.log(filteredMenu[0].title)
       const newOrder = {
         id: order.id,
         name: filteredMenu[0].title,
@@ -195,8 +187,6 @@ const computed = {
 function mounted() {}
 
 export default {
-  name,
-  components,
   data,
   computed,
   mounted,
