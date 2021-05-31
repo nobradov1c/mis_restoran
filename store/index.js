@@ -155,6 +155,10 @@ export const state = () => ({
   ordersCounter: [
     { id: 1, orders: 7 },
     { id: 2, orders: 2 },
+    { id: 95, orders: 4 },
+    { id: 91, orders: 3 },
+    { id: 90, orders: 8 },
+    { id: 61, orders: 3 },
   ],
 })
 

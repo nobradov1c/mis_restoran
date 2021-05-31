@@ -13,9 +13,11 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
+    "apexcharts": "^3.26.3",
     "bulma": "^0.9.2",
     "core-js": "^3.7.0",
-    "nuxt": "^2.14.6"
+    "nuxt": "^2.14.6",
+    "vue-apexcharts": "^1.6.1"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^3.1.0",
