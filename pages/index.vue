@@ -2,7 +2,13 @@
   <div class="page spaced">
     <h1 class="title has-text-white">Welcome to Restoran</h1>
 
-    <div class="card">
+    <div v-show="orderSaved === true">
+      <h1 class="title has-text-white">Thank you for making your order!</h1>
+
+      <button class="button is-info">Print receipt</button>
+    </div>
+
+    <div v-if="orderSaved === false" class="card">
       <header class="card-header">
         <p class="card-header-title">Your order</p>
       </header>
@@ -86,7 +92,18 @@
       />
 
       <footer class="card-footer is-flex is-justify-content-flex-end py-4">
-        <a class="button is-info is-size-5 mr-5" @click="submitOrder">Save</a>
+        <a
+          class="button is-info is-size-5 mr-5"
+          @click="
+            () => {
+              submitOrder()
+              receiptOrders = orders
+              orderSaved = true
+              orders = []
+            }
+          "
+          >Save</a
+        >
       </footer>
     </div>
   </div>
@@ -119,17 +136,9 @@ const components = {}
 function data() {
   return {
     menuModalActive: false,
-    orders: [
-      {
-        item: {
-          id: 1,
-          title: 'Hamburger',
-          image: 'hamburger.jpg',
-          price: 3.5,
-        },
-        count: 1,
-      },
-    ],
+    orders: [],
+    orderSaved: false,
+    receiptOrders: [],
   }
 }
 
@@ -178,7 +187,10 @@ const methods = {
 
   submitOrder() {
     this.orders.forEach((order) => {
-      this.addOrderToHistory(order.item.id, order.count)
+      this.addOrderToHistory({
+        orderId: order.item.id,
+        orderAmount: order.count,
+      })
     })
   },
 }

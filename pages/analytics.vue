@@ -121,14 +121,13 @@ const computed = {
   foodChartOptions() {
     return {
       title: {
-        text: 'Amount of food bought today',
+        text: 'Food bought today',
         align: 'middle',
         style: {
           fontSize: '26px',
           fontWeight: 'bold',
           fontFamily: undefined,
           color: '#f3f3f3',
-          class: 'mb-3',
         },
       },
       legend: {
@@ -195,4 +194,4 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="sass" scoped></style>
