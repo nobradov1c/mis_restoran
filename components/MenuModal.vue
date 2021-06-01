@@ -62,12 +62,7 @@ const computed = {
   },
 }
 
-function mounted() {
-  console.log('helou')
-  console.log('active: ', this.isActive)
-}
-
-export default { name, props, data, computed, mounted }
+export default { name, props, data, computed }
 </script>
 
 <style lang="sass" scoped>

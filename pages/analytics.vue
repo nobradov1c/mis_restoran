@@ -12,8 +12,8 @@
         class="mb-3"
       />
       <component
-        class="mt-3"
         :is="apexchart"
+        class="mt-3"
         height="500"
         width="800"
         type="pie"

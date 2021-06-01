@@ -5,7 +5,9 @@
     <div v-show="orderSaved === true">
       <h1 class="title has-text-white">Thank you for making your order!</h1>
 
-      <button class="button is-info">Print receipt</button>
+      <button class="button is-info" @click="createReceipt">
+        Print receipt
+      </button>
     </div>
 
     <div v-if="orderSaved === false" class="card">
@@ -98,6 +100,7 @@
             () => {
               submitOrder()
               receiptOrders = orders
+              receiptTotalPrice = totalPrice
               orderSaved = true
               orders = []
             }
@@ -128,6 +131,8 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import receipt from 'receipt'
+import JsPDF from 'jspdf'
 
 const name = 'HomePage'
 
@@ -139,6 +144,7 @@ function data() {
     orders: [],
     orderSaved: false,
     receiptOrders: [],
+    receiptTotalPrice: 0,
   }
 }
 
@@ -161,10 +167,6 @@ const computed = {
   },
 }
 
-function mounted() {
-  console.log('hello')
-}
-
 const methods = {
   ...mapMutations({
     addOrderToHistory: 'addOrderToHistory',
@@ -176,7 +178,6 @@ const methods = {
 
   addOrder(id) {
     if (this.orders.find((order) => order.item.id === id)) {
-      console.log('Item already exists!')
       return
     }
     const itemToAdd = this.menu.find((item) => item.id === id)
@@ -193,7 +194,71 @@ const methods = {
       })
     })
   },
+
+  createReceipt() {
+    receipt.config.currency = '$'
+    receipt.config.width = 80
+    receipt.config.ruler = '-'
+
+    const orderNumber = Math.floor(Math.random() * 1000) + 1
+    const date = new Date()
+
+    const lines = this.receiptOrders.map((order) => {
+      return {
+        item: order.item.title,
+        qty: order.count,
+        cost: order.item.price * 100,
+      }
+    })
+
+    const output = receipt.create([
+      {
+        type: 'text',
+        value: [
+          'MIS Restaurant',
+          '123 STORE ST',
+          'store@misrestoran.tk',
+          'www.misrestoran.tk',
+        ],
+        align: 'center',
+      },
+      { type: 'empty' },
+      {
+        type: 'properties',
+        lines: [
+          { name: 'Order Number', value: orderNumber },
+          {
+            name: 'Date',
+            value: `${date.getDate()}/${
+              date.getMonth() + 1
+            }/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`,
+          },
+        ],
+      },
+      {
+        type: 'table',
+        lines,
+      },
+      { type: 'empty' },
+      {
+        type: 'properties',
+        lines: [{ name: 'Total amount', value: `$${this.receiptTotalPrice}` }],
+      },
+      { type: 'empty' },
+      {
+        type: 'text',
+        value: 'Thank you for eating at MIS Restaurant!',
+        align: 'center',
+        padding: 5,
+      },
+    ])
+
+    const doc = new JsPDF()
+
+    doc.text(output, 20, 20)
+    doc.save('receipt.pdf')
+  },
 }
 
-export default { name, components, data, computed, mounted, methods }
+export default { name, components, data, computed, methods }
 </script>
